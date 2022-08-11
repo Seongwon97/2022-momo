@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +59,7 @@ public class GroupService {
     }
 
     public GroupPageResponse findAll(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber, DEFAULT_PAGE_SIZE);
+        Pageable pageable = PageRequest.of(pageNumber, DEFAULT_PAGE_SIZE, Sort.by("id").descending());
         Page<Group> groups = groupFindService.findGroups(pageable);
         List<Group> groupsOfPage = groups.getContent();
         List<GroupSummaryResponse> summaries = GroupResponseAssembler.groupSummaryResponses(groupsOfPage);
@@ -84,7 +85,9 @@ public class GroupService {
         schedules.stream()
                 .filter(schedule -> !schedule.checkInRange(duration.getStartDate(), duration.getEndDate()))
                 .findAny()
-                .ifPresent(schedule -> { throw new MomoException(ErrorCode.GROUP_SCHEDULE_NOT_RANGE_DURATION); } );
+                .ifPresent(schedule -> {
+                    throw new MomoException(ErrorCode.GROUP_SCHEDULE_NOT_RANGE_DURATION);
+                });
     }
 
     @Transactional
