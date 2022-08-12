@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
+import com.woowacourse.momo.category.domain.Category;
 import com.woowacourse.momo.globalException.exception.ErrorCode;
 import com.woowacourse.momo.globalException.exception.MomoException;
 import com.woowacourse.momo.group.domain.group.Group;
 import com.woowacourse.momo.group.domain.group.GroupRepository;
-import com.woowacourse.momo.group.exception.NotFoundGroupException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -34,6 +34,10 @@ public class GroupFindService {
 
     public Page<Group> findGroups(Pageable pageable) {
         return groupRepository.findAll(pageable);
+    }
+
+    public Page<Group> findGroupsByCategory(Category category, Pageable pageable) {
+        return groupRepository.findAllByCategory(category, pageable);
     }
 
     public List<Group> findRelatedGroups(Long memberId) {
