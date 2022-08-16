@@ -199,8 +199,8 @@ class GroupTest {
         Group group = constructGroup();
 
         assertThatThrownBy(() -> group.validateWithdraw(host))
-            .isInstanceOf(MomoException.class)
-            .hasMessage("주최자는 모임에 탈퇴할 수 없습니다.");
+                .isInstanceOf(MomoException.class)
+                .hasMessage("주최자는 모임에 탈퇴할 수 없습니다.");
     }
 
     @DisplayName("모임에 참여하지 않았으면 탈퇴할 수 없다")
@@ -209,8 +209,8 @@ class GroupTest {
         Group group = constructGroup();
 
         assertThatThrownBy(() -> group.validateWithdraw(participant))
-            .isInstanceOf(MomoException.class)
-            .hasMessage("모임의 참여자가 아닙니다.");
+                .isInstanceOf(MomoException.class)
+                .hasMessage("모임의 참여자가 아닙니다.");
     }
 
     @DisplayName("모집 마감이 끝난 모임에는 탈퇴할 수 없다")
@@ -222,8 +222,8 @@ class GroupTest {
         setPastDeadline(group, yesterday);
 
         assertThatThrownBy(() -> group.validateWithdraw(participant))
-            .isInstanceOf(MomoException.class)
-            .hasMessage("모집이 마감된 모임입니다.");
+                .isInstanceOf(MomoException.class)
+                .hasMessage("모집이 마감된 모임입니다.");
     }
 
     @DisplayName("조기 종료된 모임에는 탈퇴할 수 없다")
@@ -234,8 +234,8 @@ class GroupTest {
         group.closeEarly();
 
         assertThatThrownBy(() -> group.validateWithdraw(participant))
-            .isInstanceOf(MomoException.class)
-            .hasMessage("조기종료된 모임입니다.");
+                .isInstanceOf(MomoException.class)
+                .hasMessage("조기종료된 모임입니다.");
     }
 
     private Group constructGroup() {
@@ -265,7 +265,7 @@ class GroupTest {
         return group;
     }
 
-    private static void setPastDeadline(Group group, LocalDateTime deadline) throws IllegalAccessException {
+    private void setPastDeadline(Group group, LocalDateTime deadline) throws IllegalAccessException {
         int deadlineField = 8;
         Class<Group> clazz = Group.class;
         Field[] field = clazz.getDeclaredFields();

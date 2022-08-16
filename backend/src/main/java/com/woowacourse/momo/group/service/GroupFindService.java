@@ -24,7 +24,7 @@ public class GroupFindService {
     private static final int DEFAULT_PAGE_SIZE = 12;
     private final GroupRepository groupRepository;
 
-    public Group findGroup(Long id) {
+    public Group findById(Long id) {
         return groupRepository.findById(id)
                 .orElseThrow(() -> new MomoException(ErrorCode.GROUP_NOT_EXIST));
     }

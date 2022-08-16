@@ -226,13 +226,13 @@ public class ParticipantControllerTest {
         String accessToken = accessToken("participant");
 
         mockMvc.perform(delete(BASE_URL + groupId + RESOURCE)
-                .header("Authorization", "bearer " + accessToken))
-            .andExpect(status().isNoContent())
-            .andDo(
-                document("deleteparticipant",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()))
-            );
+                        .header("Authorization", "bearer " + accessToken))
+                .andExpect(status().isNoContent())
+                .andDo(
+                        document("deleteparticipant",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()))
+                );
     }
 
     @DisplayName("주최자일 경우 모임에 탈퇴할 수 없다")
@@ -243,13 +243,13 @@ public class ParticipantControllerTest {
         String accessToken = accessToken("host");
 
         mockMvc.perform(delete(BASE_URL + groupId + RESOURCE)
-                .header("Authorization", "bearer " + accessToken))
-            .andExpect(status().isBadRequest())
-            .andDo(
-                document("deletehost",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()))
-            );
+                        .header("Authorization", "bearer " + accessToken))
+                .andExpect(status().isBadRequest())
+                .andDo(
+                        document("deletehost",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()))
+                );
     }
 
     @DisplayName("모임에 참여하지 않았으면 탈퇴할 수 없다")
@@ -261,13 +261,13 @@ public class ParticipantControllerTest {
         String accessToken = accessToken("member");
 
         mockMvc.perform(delete(BASE_URL + groupId + RESOURCE)
-                .header("Authorization", "bearer " + accessToken))
-            .andExpect(status().isBadRequest())
-            .andDo(
-                document("deletenotparticipant",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()))
-            );
+                        .header("Authorization", "bearer " + accessToken))
+                .andExpect(status().isBadRequest())
+                .andDo(
+                        document("deletenotparticipant",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()))
+                );
     }
 
     @DisplayName("모집 마감이 끝난 모임에는 탈퇴할 수 없다")
@@ -283,13 +283,13 @@ public class ParticipantControllerTest {
         setPastDeadline(groupId, yesterday);
 
         mockMvc.perform(delete(BASE_URL + groupId + RESOURCE)
-                .header("Authorization", "bearer " + accessToken))
-            .andExpect(status().isBadRequest())
-            .andDo(
-                document("deletedeadline",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()))
-            );
+                        .header("Authorization", "bearer " + accessToken))
+                .andExpect(status().isBadRequest())
+                .andDo(
+                        document("deletedeadline",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()))
+                );
     }
 
     @DisplayName("조기 종료된 모임에는 탈퇴할 수 없다")
@@ -304,13 +304,13 @@ public class ParticipantControllerTest {
         groupService.closeEarly(hostId, groupId);
 
         mockMvc.perform(delete(BASE_URL + groupId + RESOURCE)
-                .header("Authorization", "bearer " + accessToken))
-            .andExpect(status().isBadRequest())
-            .andDo(
-                document("deleteearlyclosed",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()))
-            );
+                        .header("Authorization", "bearer " + accessToken))
+                .andExpect(status().isBadRequest())
+                .andDo(
+                        document("deleteearlyclosed",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()))
+                );
     }
 
     Long saveMember(String userId) {
@@ -344,7 +344,7 @@ public class ParticipantControllerTest {
     }
 
     private void setPastDeadline(Long groupId, LocalDateTime deadline) throws IllegalAccessException {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         int deadlineField = 8;
         Class<Group> clazz = Group.class;
         Field[] field = clazz.getDeclaredFields();

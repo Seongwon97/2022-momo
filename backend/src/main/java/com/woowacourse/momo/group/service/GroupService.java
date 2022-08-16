@@ -45,7 +45,7 @@ public class GroupService {
     }
 
     public GroupResponse findById(Long id) {
-        Group group = groupFindService.findGroup(id);
+        Group group = groupFindService.findById(id);
         return GroupResponseAssembler.groupResponse(group);
     }
 
@@ -75,7 +75,7 @@ public class GroupService {
 
     @Transactional
     public void update(Long hostId, Long groupId, GroupUpdateRequest request) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         validateInitialState(hostId, group);
 
         List<Schedule> schedules = GroupRequestAssembler.schedules(request.getSchedules());
@@ -98,7 +98,7 @@ public class GroupService {
 
     @Transactional
     public void closeEarly(Long hostId, Long groupId) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         validateHost(group, hostId);
         validateFinishedRecruitment(group);
 
@@ -107,7 +107,7 @@ public class GroupService {
 
     @Transactional
     public void delete(Long hostId, Long groupId) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         validateInitialState(hostId, group);
 
         groupRepository.deleteById(groupId);
