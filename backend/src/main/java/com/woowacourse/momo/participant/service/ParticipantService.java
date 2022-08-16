@@ -26,14 +26,14 @@ public class ParticipantService {
 
     @Transactional
     public void participate(Long groupId, Long memberId) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         Member member = memberFindService.findMember(memberId);
 
         group.participate(member);
     }
 
     public List<MemberResponse> findParticipants(Long groupId) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         List<Member> participants = group.getParticipants();
 
         return MemberResponseAssembler.memberResponses(participants);
@@ -46,7 +46,7 @@ public class ParticipantService {
     }
 
     private void validateWithdraw(Long groupId, Long memberId) {
-        Group group = groupFindService.findGroup(groupId);
+        Group group = groupFindService.findById(groupId);
         Member member = memberFindService.findMember(memberId);
         group.validateWithdraw(member);
     }
